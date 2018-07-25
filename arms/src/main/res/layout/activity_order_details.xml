@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@drawable/tabar_background">
+        <TextView
+            android:id="@+id/a02_life_title"
+            style="@style/TitleTextStyle"
+            android:text="萌商家"
+            android:textColor="@color/White"
+             />
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:id="@+id/a02_life_return"
+            android:layout_width="40dp"
+            android:padding="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/return_arraw" />
+        <TextView
+            android:layout_toRightOf="@+id/a02_life_return"
+            android:layout_width="40dp"
+            android:textSize="16dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
+            android:text="我的"
+            android:textColor="@color/White"/>
+    </RelativeLayout>
+    <ImageView
+        android:background="@drawable/order_null"
+        android:layout_below="@id/title_bar"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/btn_login"
+        android:text="信息正在审核，请您耐心等待"
+        android:textColor="@color/White"
+        android:textSize="18dp"/>
+
+</RelativeLayout>
