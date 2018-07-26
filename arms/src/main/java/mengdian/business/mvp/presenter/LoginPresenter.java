@@ -49,12 +49,19 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         this.mApplication = null;
     }
 
-    public String sendCode(String phoneNum) {
-        String num = getFourRandom();
-        VerificationCode verificationCode = new VerificationCode();
-        verificationCode.sendCode(phoneNum, "【萌点】您的验证码是：" + num);
-        mRootView.showMessage("【萌点】您的验证码是：" + num);
-        return num;
+    public void sendCode(String phone) {
+
+        mModel.sendCode(phone).compose(RxUtils.applySchedulers(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseJson<Object>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseJson<Object> objectBaseJson) {
+                        if (objectBaseJson.isSuccess()) {
+
+                        }
+                    }
+                });
+
+
     }
 
     private String getFourRandom() {
@@ -69,32 +76,27 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         return fourRandom;
     }
 
-    public void login(String code, String s, String phone) {
+    public void login(String phone,String code) {
 
-        if(TextUtils.isEmpty(phone)){
+        if (TextUtils.isEmpty(phone)) {
             mRootView.showMessage("请输入手机号");
         }
 
-        if(TextUtils.isEmpty(s)){
+        if (TextUtils.isEmpty(code)) {
             mRootView.showMessage("请输入验证码");
         }
-        if (!TextUtils.isEmpty(code) && code.equals(s)) {
-            //验证码相同
-            mRootView.showMessage("正在登录。。");
-            mModel.login(phone).compose(RxUtils.applySchedulers(mRootView)).subscribe(new ErrorHandleSubscriber<BaseJson<User>>(mErrorHandler) {
-                @Override
-                public void onNext(BaseJson<User> userBaseJson) {
-                    if(userBaseJson.isSuccess()){
-                        User user = userBaseJson.getData();
-                        ArmsUtils.startActivity(MainActivity.class);
-                    }else{
-                        mRootView.showMessage(userBaseJson.getMsg());
-                    }
+        mModel.login(phone,code).compose(RxUtils.applySchedulers(mRootView)).subscribe(new ErrorHandleSubscriber<BaseJson<User>>(mErrorHandler) {
+            @Override
+            public void onNext(BaseJson<User> userBaseJson) {
+                if (userBaseJson.isSuccess()) {
+                    User user = userBaseJson.getData();
+                    ArmsUtils.startActivity(MainActivity.class);
+                } else {
+                    mRootView.showMessage(userBaseJson.getMsg());
                 }
-            });
-        }else{
-            mRootView.showMessage("验证码错误");
-        }
+            }
+        });
+
 
     }
 }

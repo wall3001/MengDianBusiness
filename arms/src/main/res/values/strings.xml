@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MengDianShangApp</string>
+    <string name="format_timer">%ds</string>
 </resources>
